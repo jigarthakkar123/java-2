@@ -1,78 +1,60 @@
+<%@page import="com.dao.CarDao"%>
+<%@page import="com.bean.Car"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ include file="header.jsp" %>
+<%@ include file="owner-header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>  </head>
   <body>
-        <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+        
+    <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('images/bg_3.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact <i class="ion-ios-arrow-forward"></i></span></p>
-            <h1 class="mb-3 bread">Sign Up</h1>
+          	<p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Cars <i class="ion-ios-arrow-forward"></i></span></p>
+            <h1 class="mb-3 bread">My Cars</h1>
           </div>
         </div>
       </div>
     </section>
+		
 
-    <section class="ftco-section contact-section">
-      <div class="container">
-        <div class="row d-flex mb-5 contact-info">
-        	
-          <div class="col-md-12 block-12 mb-md-12">
-          	<%
-          		if(request.getAttribute("msg")!=null)
-          		{
-          			out.println(request.getAttribute("msg"));		
-          		}
-          	%>
-            <form action="UserController" class="bg-light p-5 contact-form" method="post">
-              <div class="form-group">
-                <select name="usertype" class="form-control">
-                	<option>---Select User Type---</option>
-                	<option value="Owner">Owner</option>
-                	<option value="Cutomer">Customer</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your First Name" name="fname">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Last Name" name="lname">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Email" name="email">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Mobile" name="mobile">
-              </div>
-              <div class="form-group">
-                <textarea cols="30" rows="7" class="form-control" placeholder="Address" name="address"></textarea>
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control" placeholder="Password" name="password">
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control" placeholder="Confirm Password" name="cpassword">
-              </div>
-              
-              <div class="form-group">
-                <input type="submit" name="action" value="Sign Up" class="btn btn-primary py-3 px-5">
-              </div>
-            </form>
+		<section class="ftco-section bg-light">
+    	<div class="container">
+    		<div class="row">
+    		<%
+    			List<Car> list=CarDao.getCarsByUser(u.getUid());
+    			for(Car c:list)
+    			{
+    		%>
+    			<div class="col-md-4">
+    				<div class="car-wrap rounded ftco-animate">
+    					<div class="img rounded d-flex align-items-end" style="background-image: url(car_images/<%=c.getCar_image()%>);">
+    					</div>
+    					<div class="text">
+    						<h2 class="mb-0"><a href="car-single.jsp"><%=c.getCar_name() %></a></h2>
+    						<div class="d-flex mb-3">
+	    						<span class="cat"><%=c.getCar_company() %></span>
+	    						<p class="price ml-auto">Rs. <%=c.getCar_ppd() %> <span>/day</span></p>
+    						</div>
+    						<p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Edit</a> <a href="car-single.jsp" class="btn btn-danger py-2 ml-1">Delete</a></p>
+    					</div>
+    				</div>
+    			</div>
+    		<%
+    			}
+    		%>
+    			
+    		</div>
+    		<div class="row mt-5">
           
-          </div>
         </div>
-        <div class="row justify-content-center">
-        	<div class="col-md-12">
-        		<div id="map" class="bg-white"></div>
-        	</div>
-        </div>
-      </div>
+    	</div>
     </section>
-	
+    
 
     <footer class="ftco-footer ftco-bg-dark ftco-section">
       <div class="container">

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ include file="header.jsp" %>
+<%@ include file="owner-header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>  </head>
@@ -10,8 +10,8 @@
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact <i class="ion-ios-arrow-forward"></i></span></p>
-            <h1 class="mb-3 bread">Sign Up</h1>
+          	<p class="breadcrumbs"><span class="mr-2"><a href="owner-index.jsp">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact <i class="ion-ios-arrow-forward"></i></span></p>
+            <h1 class="mb-3 bread">Add Car</h1>
           </div>
         </div>
       </div>
@@ -28,38 +28,37 @@
           			out.println(request.getAttribute("msg"));		
           		}
           	%>
-            <form action="UserController" class="bg-light p-5 contact-form" method="post">
-              <div class="form-group">
-                <select name="usertype" class="form-control">
-                	<option>---Select User Type---</option>
-                	<option value="Owner">Owner</option>
-                	<option value="Cutomer">Customer</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your First Name" name="fname">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Last Name" name="lname">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Email" name="email">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Mobile" name="mobile">
-              </div>
-              <div class="form-group">
-                <textarea cols="30" rows="7" class="form-control" placeholder="Address" name="address"></textarea>
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control" placeholder="Password" name="password">
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control" placeholder="Confirm Password" name="cpassword">
-              </div>
+            <form action="CarController" class="bg-light p-5 contact-form" method="post" enctype="multipart/form-data">
               
               <div class="form-group">
-                <input type="submit" name="action" value="Sign Up" class="btn btn-primary py-3 px-5">
+                <input type="text" class="form-control" placeholder="Your Car Company" name="car_company">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Your Car Name" name="car_name">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Your Car Mileage" name="car_mileage">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Your Car Transmission" name="car_transmission">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Your Car Capacity" name="car_capacity">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Your Car Luggage Capacity" name="car_luggage_cap">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Your Car Fuel" name="car_fuel">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Your Car Price Per Day" name="car_ppd">
+              </div>
+              <div class="form-group">
+                <input type="file" class="form-control" name="car_image">
+              </div>
+              <div class="form-group">
+                <input type="submit" name="action" value="Add Car" class="btn btn-primary py-3 px-5">
               </div>
             </form>
           

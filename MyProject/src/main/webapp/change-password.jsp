@@ -1,6 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ include file="header.jsp" %>
+<%
+	User u1=null;
+	if(session!=null)
+	{
+		u1=(User)session.getAttribute("u");
+	}
+	if(u1.getUsertype().equals("Owner"))
+	{
+%>
+	<%@ include file="owner-header.jsp" %>
+<%
+	}
+	else
+	{
+%>
+	<%@ include file="header.jsp" %>
+<%
+	}
+%>
 <!DOCTYPE html>
 <html lang="en">
   <head>  </head>
@@ -11,7 +29,7 @@
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
           	<p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact <i class="ion-ios-arrow-forward"></i></span></p>
-            <h1 class="mb-3 bread">Sign Up</h1>
+            <h1 class="mb-3 bread">Change Password</h1>
           </div>
         </div>
       </div>
@@ -22,7 +40,7 @@
         <div class="row d-flex mb-5 contact-info">
         	
           <div class="col-md-12 block-12 mb-md-12">
-          	<%
+          <%
           		if(request.getAttribute("msg")!=null)
           		{
           			out.println(request.getAttribute("msg"));		
@@ -30,36 +48,16 @@
           	%>
             <form action="UserController" class="bg-light p-5 contact-form" method="post">
               <div class="form-group">
-                <select name="usertype" class="form-control">
-                	<option>---Select User Type---</option>
-                	<option value="Owner">Owner</option>
-                	<option value="Cutomer">Customer</option>
-                </select>
+                <input type="password" class="form-control" placeholder="Old Password" name="old_password">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your First Name" name="fname">
+                <input type="password" class="form-control" placeholder="New Password" name="new_password">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Last Name" name="lname">
+                <input type="password" class="form-control" placeholder="Confirm New Password" name="cnew_password">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Email" name="email">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Mobile" name="mobile">
-              </div>
-              <div class="form-group">
-                <textarea cols="30" rows="7" class="form-control" placeholder="Address" name="address"></textarea>
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control" placeholder="Password" name="password">
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control" placeholder="Confirm Password" name="cpassword">
-              </div>
-              
-              <div class="form-group">
-                <input type="submit" name="action" value="Sign Up" class="btn btn-primary py-3 px-5">
+                <input type="submit" name="action" value="Change Password" class="btn btn-primary py-3 px-5">
               </div>
             </form>
           

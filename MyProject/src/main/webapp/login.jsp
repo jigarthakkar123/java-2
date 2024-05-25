@@ -22,7 +22,13 @@
         <div class="row d-flex mb-5 contact-info">
         	
           <div class="col-md-12 block-12 mb-md-12">
-            <form action="#" class="bg-light p-5 contact-form" method="post">
+          <%
+          		if(request.getAttribute("msg")!=null)
+          		{
+          			out.println(request.getAttribute("msg"));		
+          		}
+          	%>
+            <form action="UserController" class="bg-light p-5 contact-form" method="post">
               
               
               <div class="form-group">
