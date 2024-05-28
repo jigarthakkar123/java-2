@@ -21,7 +21,13 @@
       </div>
     </section>
 		
-
+		<%
+          		
+          		if(request.getAttribute("msg")!=null)
+          		{
+          			out.println(request.getAttribute("msg"));		
+          		}
+          	%>
 		<section class="ftco-section bg-light">
     	<div class="container">
     		<div class="row">
@@ -40,7 +46,7 @@
 	    						<span class="cat"><%=c.getCar_company() %></span>
 	    						<p class="price ml-auto">Rs. <%=c.getCar_ppd() %> <span>/day</span></p>
     						</div>
-    						<p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Edit</a> <a href="car-single.jsp" class="btn btn-danger py-2 ml-1">Delete</a></p>
+    						<p class="d-flex mb-0 d-block"><a href="edit-car.jsp?cid=<%=c.getCid() %>" class="btn btn-primary py-2 mr-1">Edit</a> <a href="delete-car.jsp?cid=<%=c.getCid() %>" class="btn btn-danger py-2 ml-1" onclick="test();">Delete</a></p>
     					</div>
     				</div>
     			</div>
@@ -125,6 +131,7 @@
 
 
   <script src="js/jquery.min.js"></script>
+  <script src="js/myjs.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
   <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>

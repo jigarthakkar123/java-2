@@ -68,6 +68,22 @@ public class CarController extends HttpServlet {
 			request.setAttribute("msg", "Car Added Successfully");
 			request.getRequestDispatcher("add-car.jsp").forward(request, response);
 		}
+		else if(action.equalsIgnoreCase("update car"))
+		{
+			Car c=new Car();
+			c.setCid(Integer.parseInt(request.getParameter("cid")));
+			c.setCar_company(request.getParameter("car_company"));
+			c.setCar_name(request.getParameter("car_name"));
+			c.setCar_mileage(Integer.parseInt(request.getParameter("car_mileage")));
+			c.setCar_transmission(request.getParameter("car_transmission"));
+			c.setCar_capacity(Integer.parseInt(request.getParameter("car_capacity")));
+			c.setCar_luggage_cap(Integer.parseInt(request.getParameter("car_luggage_cap")));
+			c.setCar_fuel(request.getParameter("car_fuel"));
+			c.setCar_ppd(Integer.parseInt(request.getParameter("car_ppd")));
+			CarDao.updateCar(c);
+			request.setAttribute("msg", "Car Updated Successfully");
+			request.getRequestDispatcher("view-car.jsp").forward(request, response);
+		}
 	}
 
 }

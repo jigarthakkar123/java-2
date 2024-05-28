@@ -1,66 +1,84 @@
 <%@page import="com.dao.CarDao"%>
 <%@page import="com.bean.Car"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ include file="header.jsp" %>
+<%@ include file="owner-header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>  </head>
   <body>
-        
-    <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+        <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('images/bg_3.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Cars <i class="ion-ios-arrow-forward"></i></span></p>
-            <h1 class="mb-3 bread">Cars</h1>
+          	<p class="breadcrumbs"><span class="mr-2"><a href="owner-index.jsp">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact <i class="ion-ios-arrow-forward"></i></span></p>
+            <h1 class="mb-3 bread">Edit Car</h1>
           </div>
         </div>
       </div>
     </section>
-		
-		<%
-          		
+
+    <section class="ftco-section contact-section">
+      <div class="container">
+        <div class="row d-flex mb-5 contact-info">
+        	
+          <div class="col-md-12 block-12 mb-md-12">
+          	<%
+          		int cid=Integer.parseInt(request.getParameter("cid"));
+          		Car c=CarDao.getCar(cid);
           		if(request.getAttribute("msg")!=null)
           		{
           			out.println(request.getAttribute("msg"));		
           		}
           	%>
-		<section class="ftco-section bg-light">
-    	<div class="container">
-    		<div class="row">
-    		<%
-    			List<Car> list=CarDao.getAllCars();
-    			for(Car c:list)
-    			{
-    		%>
-    			<div class="col-md-4">
-    				<div class="car-wrap rounded ftco-animate">
-    					<div class="img rounded d-flex align-items-end" style="background-image: url(car_images/<%=c.getCar_image()%>);">
-    					</div>
-    					<div class="text">
-    						<h2 class="mb-0"><a href="car-single.jsp"><%=c.getCar_name() %></a></h2>
-    						<div class="d-flex mb-3">
-	    						<span class="cat"><%=c.getCar_company() %></span>
-	    						<p class="price ml-auto">Rs. <%=c.getCar_ppd() %> <span>/day</span></p>
-    						</div>
-    						<p class="d-flex mb-0 d-block"><a href="car-single.jsp?cid=<%=c.getCid() %>" class="btn btn-primary py-2 mr-1">Details</a> </p>
-    					</div>
-    				</div>
-    			</div>
-    		<%
-    			}
-    		%>
-    			
-    		</div>
-    		<div class="row mt-5">
+            <form action="CarController" class="bg-light p-5 contact-form" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="cid" value="<%=c.getCid()%>">
+              <div class="form-group">
+                <input type="text" class="form-control" value="<%=c.getCar_company()%>" name="car_company">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" value="<%=c.getCar_name()%>" name="car_name">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" value="<%=c.getCar_mileage()%>" name="car_mileage">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" value="<%=c.getCar_transmission()%>" name="car_transmission">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" value="<%=c.getCar_capacity()%>" name="car_capacity">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" value="<%=c.getCar_luggage_cap()%>" name="car_luggage_cap">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" value="<%=c.getCar_fuel()%>" name="car_fuel">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" value="<%=c.getCar_ppd()%>" name="car_ppd">
+              </div>
+              <div class="form-group">
+                <img src="car_images/<%=c.getCar_image()%>" style="width: 100px;height: 100px;">
+              </div>
+              <!-- <div class="form-group">
+                <input type="file" class="form-control" name="car_image">
+              </div> -->
+              <div class="form-group">
+                <input type="submit" name="action" value="Update Car" class="btn btn-primary py-3 px-5">
+              </div>
+            </form>
           
+          </div>
         </div>
-    	</div>
+        <div class="row justify-content-center">
+        	<div class="col-md-12">
+        		<div id="map" class="bg-white"></div>
+        	</div>
+        </div>
+      </div>
     </section>
-    
+	
 
     <footer class="ftco-footer ftco-bg-dark ftco-section">
       <div class="container">
@@ -131,7 +149,6 @@
 
 
   <script src="js/jquery.min.js"></script>
-  <script src="js/myjs.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
   <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>

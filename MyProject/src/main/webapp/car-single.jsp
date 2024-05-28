@@ -1,3 +1,5 @@
+<%@page import="com.dao.CarDao"%>
+<%@page import="com.bean.Car"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ include file="header.jsp" %>
@@ -18,16 +20,19 @@
       </div>
     </section>
 		
-
-		<section class="ftco-section ftco-car-details">
+	<%
+		int cid=Integer.parseInt(request.getParameter("cid"));
+		Car c=CarDao.getCar(cid);
+	%>
+	<section class="ftco-section ftco-car-details">
       <div class="container">
       	<div class="row justify-content-center">
       		<div class="col-md-12">
       			<div class="car-details">
-      				<div class="img rounded" style="background-image: url(images/bg_1.jpg);"></div>
+      				<div class="img rounded" style="background-image: url(car_images/<%=c.getCar_image()%>);"></div>
       				<div class="text text-center">
-      					<span class="subheading">Cheverolet</span>
-      					<h2>Mercedes Grand Sedan</h2>
+      					<span class="subheading"><%=c.getCar_company() %></span>
+      					<h2><%=c.getCar_name() %></h2>
       				</div>
       			</div>
       		</div>
@@ -41,7 +46,7 @@
 	              	<div class="text">
 		                <h3 class="heading mb-0 pl-3">
 		                	Mileage
-		                	<span>40,000</span>
+		                	<span><%=c.getCar_mileage()%></span>
 		                </h3>
 	                </div>
                 </div>
@@ -56,7 +61,7 @@
 	              	<div class="text">
 		                <h3 class="heading mb-0 pl-3">
 		                	Transmission
-		                	<span>Manual</span>
+		                	<span><%=c.getCar_transmission() %></span>
 		                </h3>
 	                </div>
                 </div>
@@ -71,7 +76,7 @@
 	              	<div class="text">
 		                <h3 class="heading mb-0 pl-3">
 		                	Seats
-		                	<span>5 Adults</span>
+		                	<span><%=c.getCar_capacity() %> Adults</span>
 		                </h3>
 	                </div>
                 </div>
@@ -86,7 +91,7 @@
 	              	<div class="text">
 		                <h3 class="heading mb-0 pl-3">
 		                	Luggage
-		                	<span>4 Bags</span>
+		                	<span><%=c.getCar_luggage_cap() %> Bags</span>
 		                </h3>
 	                </div>
                 </div>
@@ -101,7 +106,7 @@
 	              	<div class="text">
 		                <h3 class="heading mb-0 pl-3">
 		                	Fuel
-		                	<span>Petrol</span>
+		                	<span><%=c.getCar_fuel() %></span>
 		                </h3>
 	                </div>
                 </div>
@@ -109,6 +114,20 @@
             </div>      
           </div>
       	</div>
+		<%
+			if(u!=null)
+			{
+		%>
+      		<p class="d-flex mb-0 d-block"><a href="car-single.jsp?cid=<%=c.getCid() %>" class="btn btn-primary py-2 mr-1">Book Now</a> </p>
+      	<%
+			}
+			else
+			{
+      	%>
+      		<p class="d-flex mb-0 d-block"><a href="login.jsp" class="btn btn-primary py-2 mr-1">Login</a> </p>
+      	<%
+			}
+      	%>
       	<div class="row">
       		<div class="col-md-12 pills">
 						<div class="bd-example bd-example-tabs">
