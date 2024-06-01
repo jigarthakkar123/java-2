@@ -16,7 +16,7 @@
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
           	<p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Pricing <i class="ion-ios-arrow-forward"></i></span></p>
-            <h1 class="mb-3 bread">Pricing</h1>
+            <h1 class="mb-3 bread">Payment</h1>
           </div>
         </div>
       </div>
@@ -33,17 +33,15 @@
 						        <th>&nbsp;</th>
 						        <th>&nbsp;</th>
 						        
-						        <th class="bg-dark heading">Per Day Rate</th>
+						        <th class="bg-dark heading">Final Payment</th>
 						        
 						      </tr>
 						    </thead>
 						    <tbody>
 						    
 							<%
-								List<Booking> list=BookingDao.getBookingByUser(u.getUid());
-								for(Booking b:list)
-								{
-									Car c=CarDao.getCar(b.getCid());
+								Booking b=BookingDao.getBooking(Integer.parseInt(request.getParameter("bid")));
+								Car c=CarDao.getCar(b.getCid());
 							%>
 						      <tr class="">
 						      	<td class="car-image"><div class="img" style="background-image:url(car_images/<%=c.getCar_image()%>);"></div></td>
@@ -68,7 +66,10 @@
 						        				if(b.getPayment_status().equals("pending"))
 						        				{
 						        			%>
-						        					<a href="payment.jsp?bid=<%=b.getBid()%>">Review & Make Payment</a>
+						        					<form>
+														<input type="text" id="amout" value="<%=b.getTotal_amount()%>">
+													</form>
+													<button id="payButton" onclick="CreateOrderID()" class="bttnStyle">Pay	Now</button>
 						        			<%
 						        				}
 						        				else
@@ -91,9 +92,7 @@
 
 						        
 						      </tr><!-- END TR-->
-							<%
-								}
-							%>
+							
 						       </tbody>
 						  </table>
 					  </div>
@@ -188,6 +187,62 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
-  
+  <script type="text/javascript">
+	var xhttp=new XMLHttpRequest();
+	var RazorpayOrderId;
+	function CreateOrderID()
+	{
+		xhttp.open("GET","http://localhost:8080/MyProject/OrderCreation?amount=<%=b.getTotal_amount()%>",false);
+		xhttp.send();
+		RazorpayOrderId=xhttp.responseText;
+		alert(RazorpayOrderId);
+		alert("Hello");
+		OpenCheckOut();
+	}
+</script>
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+	<script type="text/javascript">
+	
+	
+	function OpenCheckOut()
+	{
+		alert("Hello");
+		var amount=document.getElementById("amout").value;
+		var new_amount=parseInt(amount)*100;
+		alert("Hello");
+		var options={
+				"key":"rzp_test_t6fNhqRquJafiS",
+				"amount":new_amount,
+				"currency":"INR",
+				"name":"Tops",
+				"description":"Test",
+				"callback_url":"http://localhost:8080/MyProject/index.jsp?bid=<%=b.getBid()%>",
+				"prefill" : {
+					"name" : "Jigar Thakkar",
+					"email" : "jigar.thakkar.tops@gmail.com",
+					"contact" : "9377614772"
+				},
+				"notes" : {
+					"address" : "Gandhinagar"
+				},
+				"theme" : {
+					"color" : "#3399cc"
+				}
+
+			};
+			var rzp1 = new Razorpay(options);
+			rzp1.on('payment.failed', function(response) {
+				alert(response.error.code);
+				alert(response.error.description);
+				alert(response.error.source);
+				alert(response.error.step);
+				alert(response.error.reason);
+				alert(response.error.metadata.order_id);
+				alert(response.error.metadata.payment_id);
+			});
+			rzp1.open();
+			e.preventDefault();
+		}
+	</script>
   </body>
 </html>

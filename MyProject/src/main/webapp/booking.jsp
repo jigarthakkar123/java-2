@@ -1,8 +1,5 @@
 <%@page import="com.dao.CarDao"%>
 <%@page import="com.bean.Car"%>
-<%@page import="com.dao.BookingDao"%>
-<%@page import="com.bean.Booking"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ include file="header.jsp" %>
@@ -15,93 +12,67 @@
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Pricing <i class="ion-ios-arrow-forward"></i></span></p>
-            <h1 class="mb-3 bread">Pricing</h1>
+          	<p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact <i class="ion-ios-arrow-forward"></i></span></p>
+            <h1 class="mb-3 bread">Car Booking</h1>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="ftco-section ftco-cart">
-			<div class="container">
-				<div class="row">
-    			<div class="col-md-12 ftco-animate">
-    				<div class="car-list">
-	    				<table class="table">
-						    <thead class="thead-primary">
-						      <tr class="text-center">
-						        <th>&nbsp;</th>
-						        <th>&nbsp;</th>
-						        
-						        <th class="bg-dark heading">Per Day Rate</th>
-						        
-						      </tr>
-						    </thead>
-						    <tbody>
-						    
-							<%
-								List<Booking> list=BookingDao.getBookingByUser(u.getUid());
-								for(Booking b:list)
-								{
-									Car c=CarDao.getCar(b.getCid());
-							%>
-						      <tr class="">
-						      	<td class="car-image"><div class="img" style="background-image:url(car_images/<%=c.getCar_image()%>);"></div></td>
-						        <td class="product-name">
-						        	<h3><%=c.getCar_company() %> <%=c.getCar_name() %></h3>
-						        	<p class="mb-0 rated">
-						        		<span>rated:</span>
-						        		<span class="ion-ios-star"></span>
-						        		<span class="ion-ios-star"></span>
-						        		<span class="ion-ios-star"></span>
-						        		<span class="ion-ios-star"></span>
-						        		<span class="ion-ios-star"></span>
-						        	</p>
-						        </td>
-						        
-						        
-						        
-						        <td class="price">
-						        	<p class="btn-custom">
-						        		
-						        			<%
-						        				if(b.getPayment_status().equals("pending"))
-						        				{
-						        			%>
-						        					<a href="payment.jsp?bid=<%=b.getBid()%>">Review & Make Payment</a>
-						        			<%
-						        				}
-						        				else
-						        				{
-						        			%>
-						        					<a href="">Paid</a>
-						        			<%
-						        				}
-						        			%>
-						        		
-						        	</p>
-						        	<div class="price-rate">
-							        	<h3>
-							        		<span class="num">Rs.  <%=b.getTotal_amount() %></span>
-							        		<span class="per">/Total Amount</span>
-							        	</h3>
-							        	<span class="subheading">Your Payment Status Is <%=b.getPayment_status() %></span>
-						        </div>
-						        </td>
-
-						        
-						      </tr><!-- END TR-->
-							<%
-								}
-							%>
-						       </tbody>
-						  </table>
-					  </div>
-    			</div>
-    		</div>
-			</div>
-		</section>
-
+    <section class="ftco-section contact-section">
+      <div class="container">
+        <div class="row d-flex mb-5 contact-info">
+        	
+          <div class="col-md-12 block-12 mb-md-12">
+          	<%
+          		int cid=Integer.parseInt(request.getParameter("cid"));
+          		Car c=CarDao.getCar(cid); 
+          		if(request.getAttribute("msg")!=null)
+          		{
+          			out.println(request.getAttribute("msg"));		
+          		}
+          	%>
+            <form action="BookingController" class="bg-light p-5 contact-form" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="cid" value="<%=c.getCid()%>">
+              <input type="hidden" name="uid" value="<%=u.getUid()%>">
+              <div class="form-group">
+                <input type="text" class="form-control" value="<%=u.getFname()%>" name="fname">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" value="<%=u.getLname()%>" name="lname">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" value="<%=c.getCar_name()%>" name="car_name">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" value="<%=c.getCar_ppd()%>" name="car_ppd">
+              </div>
+              <div class="form-group">
+                <input type="file" class="form-control" name="identity_document">
+              </div>
+              <div class="form-group">
+                From Date : <input type="date" class="form-control" name="from_date">
+              </div>
+              <div class="form-group">
+                To Date : <input type="date" class="form-control" name="to_date">
+              </div>
+              
+              
+              <div class="form-group">
+                <input type="submit" name="action" value="Book Now" class="btn btn-primary py-3 px-5">
+              </div>
+            </form>
+          
+          </div>
+        </div>
+        <div class="row justify-content-center">
+        	<div class="col-md-12">
+        		<div id="map" class="bg-white"></div>
+        	</div>
+        </div>
+      </div>
+    </section>
+	
 
     <footer class="ftco-footer ftco-bg-dark ftco-section">
       <div class="container">
@@ -188,6 +159,6 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
-  
+    
   </body>
 </html>

@@ -1,6 +1,22 @@
+<%@page import="com.dao.BookingDao"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ include file="header.jsp" %>
+
+<%
+	int bid=0;
+	try{
+		bid=Integer.parseInt(request.getParameter("bid"));
+	}catch(Exception e){
+	}
+	if(bid!=0)
+	{
+		BookingDao.updatePaymentStatus(bid);
+		response.sendRedirect("pricing.jsp");
+	}
+%>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>

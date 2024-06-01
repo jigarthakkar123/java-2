@@ -118,7 +118,7 @@
 			if(u!=null)
 			{
 		%>
-      		<p class="d-flex mb-0 d-block"><a href="car-single.jsp?cid=<%=c.getCid() %>" class="btn btn-primary py-2 mr-1">Book Now</a> </p>
+      		<p class="d-flex mb-0 d-block"><a href="booking.jsp?cid=<%=c.getCid() %>" class="btn btn-primary py-2 mr-1">Book Now</a> </p>
       	<%
 			}
 			else
