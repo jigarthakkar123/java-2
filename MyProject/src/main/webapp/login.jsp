@@ -28,11 +28,12 @@
           			out.println(request.getAttribute("msg"));		
           		}
           	%>
-            <form action="UserController" class="bg-light p-5 contact-form" method="post">
+            <form name="login" action="UserController" class="bg-light p-5 contact-form" method="post">
               
               
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Email" name="email">
+                <input type="text" class="form-control" placeholder="Your Email" name="email" onblur="searchInfo()">
+                <span id="tops"></span>
               </div>
               
               <div class="form-group">
@@ -141,6 +142,30 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
-    
+  <script>  
+var request=new XMLHttpRequest();  
+function searchInfo()
+{  
+	var name=document.login.email.value;  
+	var url="AjaxSearch2.jsp?val="+name;  
+  	try
+  	{  
+		request.onreadystatechange=function()
+		{  
+			if(request.readyState==4)
+			{  
+				var val=request.responseText;
+				document.getElementById('tops').innerHTML=val;
+			}  
+		}  
+		request.open("GET",url,true);  
+		request.send();  
+	}
+  	catch(e)
+  	{
+  		alert("Unable to connect to server");
+  	}  
+}  
+</script>
   </body>
 </html>
